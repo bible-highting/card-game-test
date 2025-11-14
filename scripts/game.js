@@ -149,6 +149,8 @@ class CardGame {
             </div>
         `;
         
+        console.log(`📋 카드 생성: ID=${card.id}, Value=${card.value}, Index=${index}`);
+        
         // 카드 클릭 이벤트
         cardDiv.addEventListener('click', () => this.handleCardClick(card.id));
         
@@ -195,8 +197,13 @@ class CardGame {
 
     // 카드 뒤집기 애니메이션
     flipCard(card) {
+        console.log(`🔄 카드 뒤집기: ID=${card.id}, Value=${card.value}`);
         card.isFlipped = true;
         card.element.classList.add('flipped');
+        
+        // 디버깅: 카드 요소 상태 확인
+        console.log('카드 클래스:', card.element.className);
+        console.log('카드 HTML:', card.element.innerHTML);
         
         // 사운드 효과 (선택사항)
         this.playSound('flip');

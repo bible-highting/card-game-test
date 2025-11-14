@@ -1,0 +1,125 @@
+/* 카드 뒤집기 대체 스타일 - 문제 해결용 */
+.card {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    user-select: none;
+    transition: var(--transition-fast);
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius-lg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    border: 2px solid transparent;
+}
+
+/* 기본 상태: 앞면이 보임 */
+.card:not(.flipped) .card-front {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 2;
+}
+
+.card:not(.flipped) .card-back {
+    opacity: 0;
+    transform: scale(0.8);
+    z-index: 1;
+}
+
+/* 뒤집힌 상태: 뒷면이 보임 */
+.card.flipped .card-front {
+    opacity: 0;
+    transform: scale(0.8);
+    z-index: 1;
+}
+
+.card.flipped .card-back {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 2;
+}
+
+/* 카드 앞면 - 홀로그램 패턴 */
+.card-front {
+    background: 
+        linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 50%, var(--primary-color) 100%),
+        linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+    color: white;
+    font-size: 28px;
+    overflow: hidden;
+}
+
+.card-front::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.03) 2px,
+        rgba(255, 255, 255, 0.03) 4px
+    );
+    animation: cardPattern 10s linear infinite;
+}
+
+@keyframes cardPattern {
+    0% { transform: translateX(-100px) translateY(-100px); }
+    100% { transform: translateX(100px) translateY(100px); }
+}
+
+/* 카드 뒷면 - 게임다운 디자인 */
+.card-back {
+    background: var(--gradient-card);
+    border: 2px solid var(--border-color);
+    font-size: 36px;
+    color: var(--text-primary);
+    box-shadow: 
+        var(--shadow-md), 
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 20px rgba(139, 92, 246, 0.1);
+    text-shadow: 0 0 10px rgba(248, 250, 252, 0.3);
+}
+
+/* 호버 효과 */
+.card:hover {
+    transform: translateY(-2px);
+}
+
+.card:hover .card-front,
+.card:hover .card-back {
+    box-shadow: 
+        var(--shadow-lg), 
+        0 0 25px rgba(139, 92, 246, 0.4);
+    border-color: rgba(139, 92, 246, 0.6);
+}
+
+/* 매칭된 카드 효과 */
+.card.matched .card-back {
+    background: linear-gradient(135deg, var(--success-color) 0%, var(--accent-color) 100%);
+    animation: matchGlow 2s infinite;
+}
+
+@keyframes matchGlow {
+    0%, 100% { box-shadow: var(--shadow-md), 0 0 20px rgba(139, 92, 246, 0.1); }
+    50% { box-shadow: var(--shadow-lg), 0 0 30px rgba(139, 92, 246, 0.6); }
+}

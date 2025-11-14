@@ -35,15 +35,34 @@ cd card-game
 python -m http.server 8000
 ```
 
-### 2. Supabase 설정
-1. [Supabase](https://supabase.com)에서 새 프로젝트 생성
-2. `scripts/config.js` 파일에서 Supabase 설정 정보 입력:
-```javascript
-const SUPABASE_CONFIG = {
-    url: 'YOUR_SUPABASE_URL', // 예: https://your-project.supabase.co
-    anonKey: 'YOUR_SUPABASE_ANON_KEY'
-};
+### 2. 환경 변수 설정 (보안)
+
+**개발 환경:**
+1. `.env.example` 파일을 `.env`로 복사:
+```bash
+cp .env.example .env
 ```
+
+2. `.env` 파일에 실제 Supabase 정보 입력:
+```env
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_ANON_KEY=your_supabase_anon_key_here
+```
+
+**배포 환경 (Vercel):**
+1. Vercel 대시보드에서 프로젝트 선택
+2. Settings → Environment Variables에서 추가:
+   - `SUPABASE_URL`: `https://your-project.supabase.co`
+   - `SUPABASE_ANON_KEY`: `your_supabase_anon_key_here`
+
+> ⚠️ **보안 주의사항**: 
+> - `.env` 파일은 절대 Git에 커밋하지 마세요
+> - API 키는 환경 변수로만 관리하세요
+> - 로컬 개발시에만 기본값이 사용됩니다
+
+### 3. Supabase 설정
+1. [Supabase](https://supabase.com)에서 새 프로젝트 생성
+2. 환경 변수 또는 배포 플랫폼에서 설정 정보 관리
 
 ### 3. 데이터베이스 테이블 생성
 Supabase SQL 편집기에서 다음 쿼리 실행:

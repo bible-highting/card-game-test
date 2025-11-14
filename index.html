@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>메모리 카드 게임</title>
+    
+    <!-- 환경 변수 로드 (배포시 자동 설정됨) -->
+    <script>
+        // 환경 변수 초기화 - Vercel에서 빌드시 실제 값으로 대체됩니다
+        window.ENV = window.ENV || {
+            SUPABASE_URL: process?.env?.SUPABASE_URL || '',
+            SUPABASE_ANON_KEY: process?.env?.SUPABASE_ANON_KEY || ''
+        };
+    </script>
+    
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/game.css">
     <link rel="stylesheet" href="styles/animations.css">

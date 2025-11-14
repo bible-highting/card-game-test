@@ -1,0 +1,433 @@
+/* main.css - 전체 앱의 기본 스타일 */
+
+/* 폰트 import - 게임다운 폰트들 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+/* CSS 변수 정의 - 게임다운 컬러 팔레트 */
+:root {
+    /* 주요 색상 */
+    --primary-color: #8B5CF6;
+    --primary-hover: #7C3AED;
+    --primary-glow: rgba(139, 92, 246, 0.6);
+    --secondary-color: #EC4899;
+    --secondary-hover: #DB2777;
+    --secondary-glow: rgba(236, 72, 153, 0.5);
+    --accent-color: #F59E0B;
+    --accent-glow: rgba(245, 158, 11, 0.6);
+    
+    /* 성공/경고/위험 색상 */
+    --success-color: #10D9C4;
+    --success-glow: rgba(16, 217, 196, 0.6);
+    --warning-color: #F59E0B;
+    --danger-color: #EF4444;
+    
+    /* 배경 색상 */
+    --bg-color: #0F0A19;
+    --bg-gradient: linear-gradient(135deg, #0F0A19 0%, #1A0B2E 50%, #16213E 100%);
+    --card-bg: linear-gradient(145deg, #1E1B31 0%, #2D2A3F 100%);
+    --card-bg-hover: linear-gradient(145deg, #252240 0%, #34314E 100%);
+    --modal-bg: rgba(15, 10, 25, 0.95);
+    
+    /* 텍스트 색상 */
+    --text-primary: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --text-accent: #A78BFA;
+    --text-glow: rgba(248, 250, 252, 0.9);
+    
+    /* 테두리와 그림자 */
+    --border-color: rgba(139, 92, 246, 0.2);
+    --border-glow: rgba(139, 92, 246, 0.4);
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 20px var(--primary-glow);
+    --shadow-glow-lg: 0 0 40px var(--primary-glow);
+    
+    /* 반지름과 전환 */
+    --border-radius: 12px;
+    --border-radius-lg: 20px;
+    --border-radius-xl: 24px;
+    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* 그라디언트 정의 */
+    --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    --gradient-card: linear-gradient(145deg, #1E1B31 0%, #2D2A3F 50%, #252240 100%);
+    --gradient-button: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+}
+
+/* 기본 리셋 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Exo 2', 'Noto Sans KR', sans-serif;
+    background: var(--bg-gradient);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* 배경 애니메이션 파티클 효과 */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(16, 217, 196, 0.05) 0%, transparent 50%);
+    animation: backgroundFloat 20s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes backgroundFloat {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    25% { transform: translateY(-10px) rotate(1deg); }
+    50% { transform: translateY(-5px) rotate(-1deg); }
+    75% { transform: translateY(-15px) rotate(0.5deg); }
+}
+
+#app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+}
+
+/* 버튼 스타일 - 게임다운 네온 효과 */
+.btn-primary {
+    background: var(--gradient-button);
+    color: white;
+    border: 2px solid transparent;
+    padding: 14px 28px;
+    border-radius: var(--border-radius-lg);
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-md), 0 0 20px rgba(139, 92, 246, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-primary:hover {
+    background: var(--gradient-button);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    border-color: var(--primary-glow);
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:active {
+    transform: translateY(-1px) scale(0.98);
+}
+
+.btn-secondary {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border: 2px solid var(--border-color);
+    padding: 12px 24px;
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Exo 2', sans-serif;
+    cursor: pointer;
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.btn-secondary:hover {
+    background: var(--card-bg-hover);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+    transform: translateY(-2px);
+}
+
+/* 모달 스타일 - 게임다운 글로우 효과 */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--modal-bg);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    z-index: 1000;
+}
+
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: var(--border-radius-xl);
+    box-shadow: var(--shadow-lg), 0 0 50px rgba(139, 92, 246, 0.2);
+    border: 2px solid var(--border-color);
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    transform: translateY(30px) scale(0.9);
+    transition: var(--transition);
+    backdrop-filter: blur(20px);
+    position: relative;
+}
+
+.modal-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
+}
+
+.modal.active .modal-content {
+    transform: translateY(0) scale(1);
+}
+
+.modal h2 {
+    text-align: center;
+    margin-bottom: 32px;
+    color: var(--text-primary);
+    font-size: 28px;
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+}
+
+/* 입력 폼 스타일 - 게임다운 네온 효과 */
+.input-group {
+    margin-bottom: 24px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-family: 'Exo 2', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 14px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    font-family: 'Exo 2', sans-serif;
+    background: rgba(30, 27, 49, 0.5);
+    color: var(--text-primary);
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2), 0 0 20px rgba(139, 92, 246, 0.3);
+    background: rgba(30, 27, 49, 0.8);
+}
+
+.input-group input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+/* 난이도 버튼 스타일 - 게임다운 카드 효과 */
+.difficulty-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.difficulty-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 16px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    background: var(--card-bg);
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: center;
+    position: relative;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.difficulty-btn::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: var(--gradient-primary);
+    border-radius: var(--border-radius-lg);
+    opacity: 0;
+    transition: var(--transition);
+    z-index: -1;
+}
+
+.difficulty-btn:hover {
+    border-color: var(--primary-color);
+    background: var(--card-bg-hover);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+}
+
+.difficulty-btn.active {
+    border-color: var(--primary-color);
+    background: var(--card-bg-hover);
+    color: var(--text-primary);
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
+    transform: translateY(-2px);
+}
+
+.difficulty-btn.active::before {
+    opacity: 0.1;
+}
+
+.level-name {
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.level-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-family: 'Space Mono', monospace;
+    opacity: 0.8;
+}
+
+/* 플로팅 버튼 - 게임다운 글로우 효과 */
+.floating-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--gradient-button);
+    color: white;
+    border: 2px solid var(--border-color);
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg), 0 0 25px rgba(139, 92, 246, 0.4);
+    transition: var(--transition);
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    animation: floatingPulse 3s ease-in-out infinite;
+}
+
+.floating-btn:hover {
+    background: var(--gradient-button);
+    transform: scale(1.15) rotate(5deg);
+    box-shadow: var(--shadow-lg), 0 0 40px rgba(139, 92, 246, 0.6);
+    animation: none;
+}
+
+@keyframes floatingPulse {
+    0%, 100% { 
+        transform: translateY(0px) scale(1);
+        box-shadow: var(--shadow-lg), 0 0 25px rgba(139, 92, 246, 0.4);
+    }
+    50% { 
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: var(--shadow-lg), 0 0 35px rgba(139, 92, 246, 0.5);
+    }
+}
+
+/* 숨김 유틸리티 */
+.hidden {
+    display: none !important;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .modal-content {
+        padding: 24px 16px;
+        margin: 16px;
+    }
+    
+    .difficulty-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    .floating-btn {
+        bottom: 16px;
+        right: 16px;
+        width: 48px;
+        height: 48px;
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 20px 12px;
+    }
+    
+    .btn-primary {
+        width: 100%;
+        padding: 16px 24px;
+        font-size: 18px;
+    }
+}

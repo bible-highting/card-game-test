@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메모리 카드 게임</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/game.css">
+    <link rel="stylesheet" href="styles/animations.css">
+</head>
+<body>
+    <!-- 배경 효과들 -->
+    <div class="neon-grid"></div>
+    <div class="floating-particles" id="particles"></div>
+    <div class="hologram-scanline"></div>
+    
+    <div id="app">
+        <!-- 게임 헤더 -->
+        <header class="game-header">
+            <h1>🎴 메모리 카드 게임</h1>
+            <div class="game-stats">
+                <div class="stat">
+                    <span class="stat-label">시간</span>
+                    <span id="timer" class="stat-value">00:00</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">시도</span>
+                    <span id="moves" class="stat-value">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">점수</span>
+                    <span id="score" class="stat-value">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 게임 설정 모달 -->
+        <div id="gameSetup" class="modal active">
+            <div class="modal-content">
+                <h2>🎮 게임 설정</h2>
+                <div class="setup-form">
+                    <div class="input-group">
+                        <label for="playerName">플레이어 이름</label>
+                        <input type="text" id="playerName" placeholder="이름을 입력하세요" maxlength="20">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>난이도 선택</label>
+                        <div class="difficulty-buttons">
+                            <button class="difficulty-btn active" data-level="1">
+                                <span class="level-name">쉬움</span>
+                                <span class="level-desc">3×4 (12장)</span>
+                            </button>
+                            <button class="difficulty-btn" data-level="2">
+                                <span class="level-name">보통</span>
+                                <span class="level-desc">4×4 (16장)</span>
+                            </button>
+                            <button class="difficulty-btn" data-level="3">
+                                <span class="level-name">어려움</span>
+                                <span class="level-desc">4×6 (24장)</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button id="startGame" class="btn-primary">게임 시작</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 게임 보드 -->
+        <main class="game-container">
+            <div class="game-controls">
+                <button id="pauseBtn" class="btn-secondary">⏸️ 일시정지</button>
+                <button id="resetBtn" class="btn-secondary">🔄 다시시작</button>
+                <button id="hintBtn" class="btn-secondary">💡 힌트</button>
+            </div>
+            
+            <div id="gameBoard" class="game-board">
+                <!-- 카드들이 동적으로 생성됨 -->
+            </div>
+        </main>
+
+        <!-- 게임 완료 모달 -->
+        <div id="gameComplete" class="modal">
+            <div class="modal-content">
+                <h2>🎉 게임 완료!</h2>
+                <div class="result-stats">
+                    <div class="result-item">
+                        <span class="result-label">최종 점수</span>
+                        <span id="finalScore" class="result-value">0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">소요 시간</span>
+                        <span id="finalTime" class="result-value">00:00</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">총 시도</span>
+                        <span id="finalMoves" class="result-value">0</span>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button id="playAgain" class="btn-primary">다시 플레이</button>
+                    <button id="viewLeaderboard" class="btn-secondary">리더보드 보기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 리더보드 모달 -->
+        <div id="leaderboard" class="modal">
+            <div class="modal-content">
+                <h2>🏆 리더보드</h2>
+                <div class="leaderboard-filters">
+                    <button class="filter-btn active" data-level="all">전체</button>
+                    <button class="filter-btn" data-level="1">쉬움</button>
+                    <button class="filter-btn" data-level="2">보통</button>
+                    <button class="filter-btn" data-level="3">어려움</button>
+                </div>
+                <div id="leaderboardList" class="leaderboard-list">
+                    <!-- 리더보드 항목들이 동적으로 생성됨 -->
+                </div>
+                <button id="closeLeaderboard" class="btn-secondary">닫기</button>
+            </div>
+        </div>
+
+        <!-- 일시정지 오버레이 -->
+        <div id="pauseOverlay" class="pause-overlay hidden">
+            <div class="pause-content">
+                <h2>⏸️ 게임 일시정지</h2>
+                <button id="resumeBtn" class="btn-primary">게임 계속</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 리더보드 버튼 (고정) -->
+    <button id="showLeaderboard" class="floating-btn" title="리더보드 보기">🏆</button>
+
+    <!-- JavaScript 파일들 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="scripts/config.js"></script>
+    <script src="scripts/database.js"></script>
+    <script src="scripts/game.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>

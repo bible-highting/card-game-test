@@ -35,7 +35,12 @@ cd card-game
 python -m http.server 8000
 ```
 
-### 2. 환경 변수 설정 (보안)
+### 2. 환경 변수 설정 (보안 필수!)
+
+> **⚠️ 중요한 보안 사항**
+> - **절대로** 실제 API 키를 코드에 직접 작성하지 마세요
+> - `.env` 파일은 Git에 커밋되지 않습니다 (`.gitignore`에 포함됨)
+> - 프로덕션 배포시에는 환경 변수를 안전하게 설정하세요
 
 **개발 환경:**
 1. `.env.example` 파일을 `.env`로 복사:
@@ -45,9 +50,15 @@ cp .env.example .env
 
 2. `.env` 파일에 실제 Supabase 정보 입력:
 ```env
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_ANON_KEY=your_supabase_anon_key_here
+# 실제 프로젝트 정보로 변경하세요
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key_here
 ```
+
+**프로덕션 환경:**
+- Vercel: 대시보드에서 환경 변수 설정
+- Netlify: Site settings > Environment variables에서 설정
+- 기타 호스팅: 각 플랫폼의 환경 변수 설정 방법 참조
 
 **배포 환경 (Vercel):**
 1. Vercel 대시보드에서 프로젝트 선택

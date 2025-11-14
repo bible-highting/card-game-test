@@ -12,8 +12,8 @@ function getSupabaseConfig() {
         };
     }
     
-    // 2순위: 런타임 환경 변수 확인 (레거시 호환성)
-    if (typeof window !== 'undefined' && window.ENV) {
+    // 2순위: 런타임 환경 변수 확인
+    if (typeof window !== 'undefined' && window.ENV && window.ENV.SUPABASE_URL) {
         console.log('🔧 런타임 환경변수에서 Supabase 정보 로드');
         return {
             url: window.ENV.SUPABASE_URL,
@@ -21,14 +21,14 @@ function getSupabaseConfig() {
         };
     }
     
-    // 3순위: 로컬 개발환경 기본값
-    console.warn('⚠️ 빌드 설정이나 환경 변수가 없습니다. 로컬 개발 모드로 실행됩니다.');
-    console.warn('프로덕션 배포시에는 `npm run build` 명령으로 설정을 생성하세요.');
+    // 3순위: 환경 변수가 없는 경우 에러 처리
+    console.error('❌ Supabase 설정을 찾을 수 없습니다!');
+    console.error('다음 중 하나의 방법으로 설정하세요:');
+    console.error('1. .env 파일 생성 (로컬 개발)');
+    console.error('2. npm run build 실행 (프로덕션 배포)');
+    console.error('3. 환경 변수 직접 설정');
     
-    return {
-        url: 'https://upzorlgkdzxxvavhpjur.supabase.co', // 로컬 개발용 URL
-        anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwem9ybGdrZHp4eHZhdmhwanVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5OTM3NjEsImV4cCI6MjA3ODU2OTc2MX0.VC9skry9ip9wc1ODsBNN1U512Ex-rOQy0SleiCvvX6w' // 로컬 개발용 anon key
-    };
+    throw new Error('Supabase configuration is missing. Please check your environment variables or build configuration.');
 }
 
 const SUPABASE_CONFIG = getSupabaseConfig();

@@ -1,7 +1,16 @@
 # 환경 변수 파일 (보안상 중요!)
 .env
+.env.*
+!.env.example
 .env.local
 .env.production
+
+# 보안 키 파일들
+*.key
+*.pem
+*.p12
+config/secrets.js
+secrets/
 
 # 빌드시 자동 생성되는 파일들
 supabase-config.js

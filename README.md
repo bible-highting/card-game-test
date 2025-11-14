@@ -60,11 +60,35 @@ SUPABASE_ANON_KEY=your_supabase_anon_key_here
 > - API 키는 환경 변수로만 관리하세요
 > - 로컬 개발시에만 기본값이 사용됩니다
 
-### 3. Supabase 설정
+### 3. 빌드 시스템
+
+**자동 설정 생성:**
+```bash
+# 환경변수를 기반으로 supabase-config.js 자동 생성
+npm run build
+
+# 개발 서버 시작 (빌드 포함)
+npm run dev
+
+# 프로덕션 빌드 및 서버 시작
+npm start
+```
+
+**환경변수 설정 후 빌드:**
+```bash
+# 환경변수 설정
+export SUPABASE_URL="https://your-project.supabase.co"
+export SUPABASE_ANON_KEY="your_anon_key"
+
+# 빌드 실행
+npm run build
+```
+
+### 4. Supabase 설정
 1. [Supabase](https://supabase.com)에서 새 프로젝트 생성
 2. 환경 변수 또는 배포 플랫폼에서 설정 정보 관리
 
-### 3. 데이터베이스 테이블 생성
+### 5. 데이터베이스 테이블 생성
 Supabase SQL 편집기에서 다음 쿼리 실행:
 ```sql
 CREATE TABLE card_game_scores (

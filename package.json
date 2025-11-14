@@ -1,0 +1,33 @@
+{
+  "name": "card-memory-game",
+  "version": "1.0.0",
+  "description": "사이버펑크 테마의 메모리 카드 게임",
+  "main": "index.html",
+  "scripts": {
+    "build": "node build.js",
+    "build:config": "node build.js",
+    "dev": "npm run build:config && python -m http.server 8000",
+    "start": "npm run build:config && npx serve .",
+    "deploy:vercel": "npm run build && vercel --prod",
+    "clean": "rm -f supabase-config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bible-highting/card-game-test.git"
+  },
+  "keywords": [
+    "memory-game",
+    "card-game",
+    "javascript",
+    "supabase",
+    "cyberpunk",
+    "web-game"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

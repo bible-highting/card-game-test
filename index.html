@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>메모리 카드 게임</title>
     
-    <!-- 환경 변수 로드 (배포시 자동 설정됨) -->
+    <!-- 빌드시 자동 생성된 Supabase 설정 로드 -->
+    <script src="supabase-config.js" defer></script>
+    
+    <!-- 환경 변수 로드 (배포시 자동 설정됨) - 레거시 호환성용 -->
     <script>
         // 환경 변수 초기화 - Vercel에서 빌드시 실제 값으로 대체됩니다
         window.ENV = window.ENV || {

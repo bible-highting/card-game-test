@@ -1,24 +1,33 @@
 // config.js - Supabase 연결 설정
 
-// Supabase 프로젝트 설정 - 환경 변수 사용
-// 보안을 위해 실제 API 키는 환경 변수로 관리합니다
+// Supabase 프로젝트 설정 - 빌드시 자동 생성된 설정 사용
+// 보안을 위해 실제 API 키는 환경 변수로 관리하고 빌드시 주입됩니다
 function getSupabaseConfig() {
-    // Vercel/Netlify 등 배포 환경에서 환경 변수 확인
+    // 1순위: 빌드시 생성된 설정 파일에서 로드
+    if (typeof window !== 'undefined' && window.SUPABASE_CONFIG) {
+        console.log('🔧 빌드 설정에서 Supabase 정보 로드');
+        return {
+            url: window.SUPABASE_CONFIG.url,
+            anonKey: window.SUPABASE_CONFIG.anonKey
+        };
+    }
+    
+    // 2순위: 런타임 환경 변수 확인 (레거시 호환성)
     if (typeof window !== 'undefined' && window.ENV) {
+        console.log('🔧 런타임 환경변수에서 Supabase 정보 로드');
         return {
             url: window.ENV.SUPABASE_URL,
             anonKey: window.ENV.SUPABASE_ANON_KEY
         };
     }
     
-    // 로컬 개발환경 또는 환경변수가 없을 때의 기본값
-    // 주의: 이 값들은 개발용이며, 프로덕션에서는 실제 환경변수를 사용해야 합니다
-    console.warn('⚠️ 환경 변수가 설정되지 않았습니다. 개발 모드로 실행됩니다.');
-    console.warn('프로덕션 배포시에는 반드시 환경 변수를 설정하세요.');
+    // 3순위: 로컬 개발환경 기본값
+    console.warn('⚠️ 빌드 설정이나 환경 변수가 없습니다. 로컬 개발 모드로 실행됩니다.');
+    console.warn('프로덕션 배포시에는 `npm run build` 명령으로 설정을 생성하세요.');
     
     return {
-        url: 'https://upzorlgkdzxxvavhpjur.supabase.co', // 개발용 URL
-        anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwem9ybGdrZHp4eHZhdmhwanVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5OTM3NjEsImV4cCI6MjA3ODU2OTc2MX0.VC9skry9ip9wc1ODsBNN1U512Ex-rOQy0SleiCvvX6w' // 개발용 anon key
+        url: 'https://upzorlgkdzxxvavhpjur.supabase.co', // 로컬 개발용 URL
+        anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwem9ybGdrZHp4eHZhdmhwanVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5OTM3NjEsImV4cCI6MjA3ODU2OTc2MX0.VC9skry9ip9wc1ODsBNN1U512Ex-rOQy0SleiCvvX6w' // 로컬 개발용 anon key
     };
 }
 
